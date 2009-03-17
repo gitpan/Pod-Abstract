@@ -7,13 +7,12 @@ use Pod::Abstract::Parser;
 use Pod::Abstract::Node;
 use base qw(Exporter);
 
-our $VERSION = '0.14';
+our $VERSION = '0.15';
 
 our @EXPORT_OK = qw(node nodes);
-use constant {
-    node  => 'Pod::Abstract::BuildNode',
-    nodes => 'Pod::Abstract::BuildNode',
-};
+
+sub node { 'Pod::Abstract::BuildNode' };
+sub nodes { 'Pod::Abstract::BuildNode' };
 
 =head1 NAME
 
@@ -122,6 +121,25 @@ sub begin {
         ),
         );
     return $begin;
+}
+
+=head2 for
+
+ my $for = node->for('overlay from <class>');
+
+Create a =for node. The argument is the literal body of the for node,
+no parsing will be performed.
+
+=cut
+
+sub for {
+    my $class = shift;
+    my $str = shift;
+
+    return Pod::Abstract::Node->new(
+        type => 'for',
+        body => $str,
+        );
 }
 
 =head2 paragraph
@@ -375,6 +393,8 @@ sub cut {
 Ben Lilburne <bnej@mac.com>
 
 =head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2009 Ben Lilburne
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
