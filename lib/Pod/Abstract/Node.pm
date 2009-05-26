@@ -5,7 +5,9 @@ use warnings;
 use Pod::Abstract::Tree;
 use Pod::Abstract::Serial;
 
-our $VERSION = '0.16';
+use Scalar::Util qw(weaken);
+
+our $VERSION = '0.17';
 
 =head1 NAME
 
@@ -624,9 +626,32 @@ sub parent {
             warn "Implicit detach when reparenting";
         }
         $self->{parent} = $new_parent;
+        
+        # Parent nodes have to be weak - otherwise we leak.
+        weaken $self->{parent} 
+           if defined $self->{parent};
     }
     
     return $self->{parent};
+}
+
+=head2 root
+
+ $node->root
+
+Find the root node for the tree holding this node - this may be the
+original node if it has no parent.
+
+=cut
+
+sub root {
+    my $n = shift;
+    
+    while(defined $n->parent) {
+        $n = $n->parent;
+    }
+    
+    return $n;
 }
 
 =head2 children
