@@ -7,7 +7,7 @@ use Pod::Abstract::Serial;
 
 use Scalar::Util qw(weaken);
 
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 =head1 NAME
 
@@ -229,7 +229,7 @@ sub pod {
         if($body_attr) {
             $body = $self->param($body_attr)->pod;
         }
-        if(defined $body) {
+        if(defined $body && $body ne '') {
             $r .= "=$type $body$p_break";
         } else {
             $r .= "=$type$p_break";
@@ -368,7 +368,7 @@ sub duplicate {
     my %new_params = ( );
     foreach my $param (keys %$params) {
         my $pv = $params->{$param};
-        if(ref $pv && UNIVERSAL::can($pv, 'duplicate')) {
+        if(ref $pv && eval { $pv->can('duplicate') } ) {
             $new_params{$param} = $pv->duplicate;
         } elsif(! ref $pv) {
             $new_params{$param} = $pv;

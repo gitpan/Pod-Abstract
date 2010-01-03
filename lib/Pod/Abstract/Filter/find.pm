@@ -5,7 +5,7 @@ use warnings;
 use base qw(Pod::Abstract::Filter);
 use Pod::Abstract::BuildNode qw(node);
 
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 =head1 NAME
 
@@ -27,7 +27,7 @@ head4 or list item, we're fine. If you use head1 then it won't be useful.
 In order to be useful as an end user tool, head1 nodes (...) are added
 between the found nodes. This stops perldoc from dying with no
 documentation. These can be easily stripped using:
-C<<$pa->select('/head1')>>, then hoist and detach, or reparent to other
+C<< $pa->select('/head1') >>, then hoist and detach, or reparent to other
 Node types.
 
 A good example of this working as intended is:

@@ -1,6 +1,6 @@
 package Pod::Abstract::Serial;
 use strict;
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 my $serial_number = 0;
 
@@ -18,7 +18,7 @@ This will cause problems with Pod::Abstract documents frozen to disk
 using Data::Dumper etc, unless C<set> is used to bump the number above
 the highest number read.
 
-Or just serialise your document with C<<$node->pod>> instead!
+Or just serialise your document with C<< $node->pod >> instead!
 
 =cut
 

@@ -6,7 +6,7 @@ use Pod::Abstract::Node;
 use Data::Dumper;
 use base qw(Pod::Parser);
 
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 =head1 NAME
 
@@ -136,7 +136,9 @@ sub command {
         if($no_parse{$top->type} && !$top->param('parse_me')) {
             my $t_node = Pod::Abstract::Node->new(
                 type => ':text',
-                body => "=$command $paragraph$p_break",
+                body => ($paragraph ne '' ? 
+                         "=$command $paragraph$p_break" :
+                         "=$command$p_break"),
                 );
             $top->push($t_node);
             return;
